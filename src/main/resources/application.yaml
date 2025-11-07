@@ -1,0 +1,10 @@
+server:
+  port: 3000
+spring:
+  application:
+    name: user-sevice
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
