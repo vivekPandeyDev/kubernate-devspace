@@ -43,7 +43,7 @@ dev:
     devImage: ghcr.io/loft-sh/devspace-containers/java-gradle:7-jdk17-slim
     # Sync files between the local filesystem and the development container
     sync:
-      - path: ./
+      - path: ./:/app
     # Open a terminal and use the following command to start it
     terminal:
       command: /bin/bash

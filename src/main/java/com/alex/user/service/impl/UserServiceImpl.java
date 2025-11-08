@@ -5,18 +5,21 @@ import com.alex.user.dao.UserRepository;
 import com.alex.user.model.User;
 import com.alex.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
 
     @Override
     public List<User> getAllUsers() {
+        log.info("Testing dev container");
         return repository.findAll();
     }
 
