@@ -1,0 +1,30 @@
+# ServiceAccount: identity for the pods
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: user-service-sa
+  labels:
+    app: user-service
+---
+# Role: defines permissions (read-only access to basic resources)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: user-service-role
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services"]
+    verbs: ["get", "list", "watch"]
+---
+# RoleBinding: links the Role to the ServiceAccount
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: user-service-rolebinding
+subjects:
+  - kind: ServiceAccount
+    name: user-service-sa
+roleRef:
+  kind: Role
+  name: user-service-role
+  apiGroup: rbac.authorization.k8s.io

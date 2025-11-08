@@ -14,27 +14,26 @@ spec:
       labels:
         app: user-service
     spec:
-      # ✅ Disable automounting service account token for security (if not needed)
       automountServiceAccountToken: false
-
-      # ✅ Optionally bind to a minimal RBAC service account (see below)
       serviceAccountName: user-service-sa
 
       containers:
         - name: user-service
-          image: user-service:1.0.0   # use specific tag, not 'latest'
+          image: user-service:1.0.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
 
-          # ✅ Resource limits and requests
+          # Define CPU, Memory, and Ephemeral Storage constraints
           resources:
             requests:
               cpu: "100m"
               memory: "128Mi"
+              ephemeral-storage: "256Mi"   # ✅ Storage request
             limits:
               cpu: "500m"
               memory: "512Mi"
+              ephemeral-storage: "1Gi"     # ✅ Storage limit
 
           volumeMounts:
             - name: app-storage
@@ -44,56 +43,3 @@ spec:
         - name: app-storage
           persistentVolumeClaim:
             claimName: user-service-pvc
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: user-service-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: user-service
-spec:
-  selector:
-    app: user-service
-  ports:
-    - port: 80
-      targetPort: 8080
-  type: ClusterIP
----
-# ✅ Minimal RBAC: ServiceAccount + Role + RoleBinding
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: user-service-sa
-  labels:
-    app: user-service
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: user-service-role
-rules:
-  # restrict to namespace-scoped read-only operations if needed
-  - apiGroups: [""]
-    resources: ["pods", "services"]
-    verbs: ["get", "list", "watch"]
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: user-service-rolebinding
-subjects:
-  - kind: ServiceAccount
-    name: user-service-sa
-roleRef:
-  kind: Role
-  name: user-service-role
-  apiGroup: rbac.authorization.k8s.io
