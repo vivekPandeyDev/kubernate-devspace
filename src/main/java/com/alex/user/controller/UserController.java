@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UserController {
 
+    public static final String REDIRECT_USERS = "redirect:/users";
     private final UserService userService;
 
     @GetMapping
@@ -27,10 +28,22 @@ public class UserController {
         return "user-form";
     }
 
+    @PostMapping("/users/clone/{id}")
+    public String cloneUser(@PathVariable Long id) {
+        User existingUser = userService.getUserById(id);
+        if (existingUser != null) {
+            User clonedUser = new User();
+            clonedUser.setName(existingUser.getName());
+            clonedUser.setEmail(existingUser.getEmail());
+            userService.saveUser(clonedUser);
+        }
+        return REDIRECT_USERS;
+    }
+
     @PostMapping
     public String saveUser(@ModelAttribute User user) {
         userService.saveUser(user);
-        return "redirect:/users";
+        return REDIRECT_USERS;
     }
 
     @GetMapping("/edit/{id}")
@@ -42,6 +55,6 @@ public class UserController {
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return "redirect:/users";
+        return REDIRECT_USERS;
     }
 }

@@ -2,27 +2,66 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Form</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f8f9fa; /* light gray background */
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* soft shadow */
+            background-color: #ffffff; /* white card */
+        }
+        .card h2 {
+            text-align: center;
+            margin-top: 1rem;
+            font-weight: 600;
+            color: #343a40;
+        }
+        .btn-primary {
+            width: 100px;
+        }
+        .btn-secondary {
+            width: 100px;
+        }
+    </style>
 </head>
 <body>
-<h2 th:text="${user.id == null} ? 'Add User' : 'Edit User'">User Form</h2>
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card p-4 col-md-6">
+        <h2>
+            <span th:if="${user.id == null}">Add User</span>
+            <span th:unless="${user.id == null}">Edit User</span>
+        </h2>
 
-<form th:action="@{/users}" th:object="${user}" method="post">
-    <input type="hidden" th:field="*{id}" />
+        <div class="card-body">
+            <form th:action="@{/users}" th:object="${user}" method="post">
+                <input type="hidden" th:field="*{id}" />
 
-    <p>
-        <label for="name">Name:</label>
-        <input id="name" type="text" th:field="*{name}" required />
-    </p>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input id="name" type="text" th:field="*{name}" class="form-control" placeholder="Enter name" required />
+                </div>
 
-    <p>
-        <label for="email">Email:</label>
-        <input id="email" type="email" th:field="*{email}" required />
-    </p>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input id="email" type="email" th:field="*{email}" class="form-control" placeholder="Enter email" required />
+                </div>
 
-    <button type="submit">Save</button>
-</form>
+                <div class="d-flex justify-content-between mt-4">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a th:href="@{/users}" class="btn btn-secondary">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-<p><a href="/users">Back to List</a></p>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
