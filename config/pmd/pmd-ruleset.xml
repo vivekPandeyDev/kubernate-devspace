@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="Project Custom Rules"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0
+                             https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+
+    <description>
+        Custom PMD ruleset for com.alex.user Spring Boot project (Java 17)
+    </description>
+
+    <!-- Best Practices -->
+    <rule ref="category/java/bestpractices.xml/UnusedPrivateField"/>
+    <rule ref="category/java/bestpractices.xml/UnusedPrivateMethod"/>
+    <rule ref="category/java/bestpractices.xml/AvoidUsingHardCodedIP"/>
+    <rule ref="category/java/bestpractices.xml/UnusedLocalVariable"/>
+
+    <!-- Code Style -->
+    <rule ref="category/java/codestyle.xml/UnnecessaryImport"/>
+    <rule ref="category/java/codestyle.xml/UnnecessaryFullyQualifiedName"/>
+    <rule ref="category/java/codestyle.xml/TooManyStaticImports"/>
+
+    <!-- Design -->
+    <rule ref="category/java/design.xml/TooManyMethods"/>
+
+    <!-- Error Prone & Correctness -->
+    <rule ref="category/java/errorprone.xml/EmptyCatchBlock"/>
+    <rule ref="category/java/errorprone.xml/BrokenNullCheck"/>
+
+    <!-- Performance -->
+    <rule ref="category/java/performance.xml/UseStringBufferForStringAppends"/>
+
+    <!-- Documentation (optional) -->
+    <rule ref="category/java/documentation.xml/CommentRequired"/>
+
+</ruleset>

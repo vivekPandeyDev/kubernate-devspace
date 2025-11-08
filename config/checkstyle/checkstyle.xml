@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+        "-//Checkstyle//DTD Checkstyle Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/configuration_1_2.dtd">
+
+<module name="Checker">
+    <!-- Enable suppressions if you have a suppressions.xml file -->
+    <module name="SuppressionFilter">
+        <property name="file" value="${config_loc}/checkstyle-suppressions.xml"/>
+    </module>
+    <!-- Limit file length -->
+    <module name="FileLength">
+        <property name="max" value="2000"/>
+    </module>
+    <!-- Basic checks -->
+    <module name="TreeWalker">
+        <!-- Enforce method length -->
+        <module name="MethodLength">
+            <property name="max" value="100"/>
+        </module>
+        <!-- Enforce class design -->
+        <module name="ClassFanOutComplexity">
+            <property name="max" value="20"/>
+        </module>
+        <!-- Avoid unused imports -->
+        <module name="UnusedImports"/>
+
+        <!-- Enforce naming conventions -->
+        <module name="LocalVariableName"/>
+        <module name="MemberName"/>
+        <module name="ParameterName"/>
+        <module name="MethodName"/>
+        <module name="TypeName"/>
+
+        <module name="JavadocMethod">
+            <property name="accessModifiers" value="public"/>
+            <property name="allowMissingParamTags" value="true"/>
+            <property name="allowMissingReturnTag" value="true"/>
+        </module>
+
+        <module name="JavadocMethod">
+            <property name="accessModifiers" value="public"/>
+        </module>
+    </module>
+</module>
