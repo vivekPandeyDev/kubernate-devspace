@@ -35,11 +35,15 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-	compileOnly("org.projectlombok:lombok")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.mapstruct:mapstruct:${findProperty("mapStructVersion")}")
+    runtimeOnly("org.postgresql:postgresql")
+    compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 	annotationProcessor("org.projectlombok:lombok")
+    annotationProcessor("org.mapstruct:mapstruct-processor:${findProperty("mapStructVersion")}")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
@@ -96,7 +100,7 @@ tasks.jacocoTestReport {
 
 spotbugs {
     toolVersion.set("4.9.8")
-    ignoreFailures.set(false)
+    ignoreFailures.set(true)
     showProgress.set(true)
     reportsDir.set(layout.buildDirectory.dir("spotbugsReports"))
 

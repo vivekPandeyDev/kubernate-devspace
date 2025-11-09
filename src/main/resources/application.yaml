@@ -2,7 +2,15 @@ server:
   port: 3000
 spring:
   application:
-    name: user-sevice
+    name: user-service
+  datasource:
+    url: jdbc:postgresql://postgres:5432/user-db
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
   devtools:
     restart:
       enabled: true
